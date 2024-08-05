@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Main-Class: cc.jq1024.middleware.sdk.OpenAiCodeReview
