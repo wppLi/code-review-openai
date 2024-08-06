@@ -87,9 +87,13 @@ public class GitCommand {
         // 关闭流，释放资源
         logReader.close();
         // 等待上面启动的进程执行完成
-        logProcess.waitFor();
+        int logExitCode = logProcess.waitFor();
+        if (logExitCode != 0) {
+            // 异常退出
+            throw new RuntimeException("Failed to git git hash, exit code: " + logExitCode);
+        }
         // 通过 git hash 确保一定可以获取到两次 git diff 的代码
-        ProcessBuilder diffProcessBuilder = new ProcessBuilder("git", "diff", latestCommitHash + "^" + latestCommitHash);
+        ProcessBuilder diffProcessBuilder = new ProcessBuilder("git", "diff", latestCommitHash + "^", latestCommitHash);
         diffProcessBuilder.directory(new File("."));
         Process diffProcess = diffProcessBuilder.start();
 
