@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class Message {
 
-    private String touser = "or0Ab6ivwmypESVp_bYuk92T6SvU";
-    private String template_id = "GLlAM-Q4jdgsktdNd35hnEbHVam2mwsW2YWuxDhpQkU";
-    private String url = "https://weixin.qq.com";
+    private String touser = "oxd-l6lb0KOF5KRwBy7GDHxeXaeE";
+    private String template_id = "HwS6_X9qNeOb2j2MWZZfg70xLiPdefcJMrV-xchIr8Y";
+    private String url = "https://github.com/wppLi/opena-code-review-log/blob/main/2024-08-06/tusYcGvBphNE.md";
     private Map<String, Map<String, String>> data = new HashMap<>();
 
     public void put(String key, String value) {

@@ -2,6 +2,7 @@ package cc.jq1024.middleware;
 
 import cc.jq1024.middleware.sdk.domain.model.ChatCompletionSyncResponse;
 import cc.jq1024.middleware.sdk.types.utils.BearerTokenUtils;
+import cc.jq1024.middleware.sdk.types.utils.WXAccessTokenUtils;
 import com.alibaba.fastjson2.JSON;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -14,6 +15,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Unit test for simple App.
@@ -53,7 +57,7 @@ public class AppTest {
                 + "}";
 
 
-        try(OutputStream os = connection.getOutputStream()) {
+        try (OutputStream os = connection.getOutputStream()) {
             byte[] input = jsonInpuString.getBytes(StandardCharsets.UTF_8);
             os.write(input);
         }
@@ -65,7 +69,7 @@ public class AppTest {
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String inputLine;
         StringBuilder content = new StringBuilder();
-        while ((inputLine = in.readLine()) != null){
+        while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
         // 关闭连接
@@ -78,4 +82,87 @@ public class AppTest {
 
     }
 
+    @Test
+    public void test_wx() {
+//        String accessToken = WXAccessTokenUtils.getAccessToken();
+        String accessToken = "83_O6jF21SVfUE4Trkv_MSg-WKVdXEE5lh3hdaWhTfrOBerG19wvfk6D5XH2HTkluVv5wL6H08X2vfqJapxEcEWNBnB84lGdA5pUAYXmLuAjivgiIeS7-P91E3u_bEPBWfADABNI";
+        System.out.println(accessToken);
+
+        Message message = new Message();
+        message.put("project","big-market");
+        message.put("review","feat: 新加功能");
+
+        String url = String.format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s", accessToken);
+        sendPostRequest(url, JSON.toJSONString(message));
+    }
+
+    private static void sendPostRequest(String urlString, String jsonBody) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            try (Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name())) {
+                String response = scanner.useDelimiter("\\A").next();
+                System.out.println(response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static class Message {
+        private String touser = "oxd-l6lb0KOF5KRwBy7GDHxeXaeE";
+        private String template_id = "HwS6_X9qNeOb2j2MWZZfg70xLiPdefcJMrV-xchIr8Y";
+        private String url = "https://github.com/wppLi/opena-code-review-log/blob/main/2024-08-06/tusYcGvBphNE.md";
+        private Map<String, Map<String, String>> data = new HashMap<>();
+
+        public void put(String key, String value) {
+            data.put(key, new HashMap<String, String>() {
+                {
+                    put("value", value);
+                }
+            });
+        }
+
+        public String getTouser() {
+            return touser;
+        }
+
+        public void setTouser(String touser) {
+            this.touser = touser;
+        }
+
+        public String getTemplate_id() {
+            return template_id;
+        }
+
+        public void setTemplate_id(String template_id) {
+            this.template_id = template_id;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public Map<String, Map<String, String>> getData() {
+            return data;
+        }
+
+        public void setData(Map<String, Map<String, String>> data) {
+            this.data = data;
+        }
+    }
 }

@@ -2,9 +2,11 @@ package cc.jq1024.middleware.sdk;
 
 import cc.jq1024.middleware.sdk.domain.model.ChatCompletionRequest;
 import cc.jq1024.middleware.sdk.domain.model.ChatCompletionSyncResponse;
+import cc.jq1024.middleware.sdk.domain.model.Message;
 import cc.jq1024.middleware.sdk.domain.model.Model;
 import cc.jq1024.middleware.sdk.types.utils.BearerTokenUtils;
 import cc.jq1024.middleware.sdk.types.utils.RandomUtils;
+import cc.jq1024.middleware.sdk.types.utils.WXAccessTokenUtils;
 import com.alibaba.fastjson2.JSON;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
@@ -55,8 +57,52 @@ public class OpenAiCodeReview {
         String log = chatGlmCodeReview(diffCode.toString());
         System.out.println("code review logs：" + log);
 
+        // 3. 写入日志
         String logUrl = writeLog(githubToken, log);
         logger.info("log write url: {}", logUrl);
+
+        // 4. 消息通知
+        logger.info("push message: {}", logUrl);
+        pushMessage(logUrl);
+    }
+
+    /**
+     * 消息通知
+     */
+    private static void pushMessage(String logUrl) {
+        String accessToken = WXAccessTokenUtils.getAccessToken();
+        System.out.println(accessToken);
+
+        Message message = new Message();
+        message.put("project","big-market");
+        message.put("review","feat: 新加功能");
+        message.setUrl(logUrl);
+
+        String url = String.format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s", accessToken);
+        sendPostRequest(url, JSON.toJSONString(message));
+    }
+
+    private static void sendPostRequest(String urlString, String jsonBody) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            try (Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name())) {
+                String response = scanner.useDelimiter("\\A").next();
+                System.out.println(response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
