@@ -144,7 +144,7 @@ public class OpenAiCodeReview {
         // git命令进行提交
         git.add().addFilepattern(dateFolderName + "/" + fileName).call();
         git.commit().setMessage("Add new log file via GitHub Actions").call();
-        git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, ""));
+        git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, "")).call();
         logger.info("Changes have been pushed to the repository.");
 
         return "https://github.com/wppLi/opena-code-review-log/blob/main/" + dateFolderName + "/" + fileName;
