@@ -48,7 +48,7 @@ public class GitCommand {
     }
 
 
-    public GitCommand(String githubReviewLogUri, String githubToken, String project, String branch, String author, String message, String githubReturnLogUri) {
+    public GitCommand(String githubReviewLogUri, String githubReturnLogUri, String githubToken, String project, String branch, String author, String message) {
         if (githubReturnLogUri.endsWith("/")) {
             throw new RuntimeException("reviewLogUri can not be 【/】 as end.");
         }
