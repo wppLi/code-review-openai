@@ -142,7 +142,7 @@ public class OpenAiCodeReview {
         }
 
         // git命令进行提交
-        git.add().addFilepattern(filePath).call();
+        git.add().addFilepattern(dateFolderName + "/" + fileName).call();
         git.commit().setMessage("Add new log file via GitHub Actions").call();
         git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, ""));
         logger.info("Changes have been pushed to the repository.");
