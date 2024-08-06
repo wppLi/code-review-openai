@@ -117,6 +117,7 @@ public class GitCommand {
 
 
     public String commitAndPush(String recommend) throws Exception {
+        log.info("githubReviewLogUri: {}  githubToken:{}", githubReviewLogUri, githubToken);
         Git git = Git.cloneRepository()
                 .setURI(githubReviewLogUri + ".git") // 仓库地址
                 .setDirectory(new File("repo")) // 设置日志存储路径
