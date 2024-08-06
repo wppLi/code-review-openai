@@ -13,7 +13,7 @@ public class AppTest {
 
     @Test
     public void test() {
-        System.out.println(Integer.parseInt("6"));
+        System.out.println(Integer.parseInt("a"));
     }
 
 }
