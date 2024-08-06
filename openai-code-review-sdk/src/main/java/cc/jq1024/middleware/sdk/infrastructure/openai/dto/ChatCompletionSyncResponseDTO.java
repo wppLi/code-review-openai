@@ -1,8 +1,8 @@
-package cc.jq1024.middleware.sdk.domain.model;
+package cc.jq1024.middleware.sdk.infrastructure.openai.dto;
 
 import java.util.List;
 
-public class ChatCompletionSyncResponse {
+public class ChatCompletionSyncResponseDTO {
 
     private List<Choice> choices;
 

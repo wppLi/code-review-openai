@@ -15,8 +15,12 @@ public class WXAccessTokenUtils {
     private static final String URL_TEMPLATE = "https://api.weixin.qq.com/cgi-bin/token?grant_type=%s&appid=%s&secret=%s";
 
     public static String getAccessToken() {
+        return getAccessToken(APPID, SECRET);
+    }
+
+    public static String getAccessToken(String appId, String secret) {
         try {
-            String urlString = String.format(URL_TEMPLATE, GRANT_TYPE, APPID, SECRET);
+            String urlString = String.format(URL_TEMPLATE, GRANT_TYPE, appId, secret);
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -34,9 +38,6 @@ public class WXAccessTokenUtils {
                 }
                 in.close();
 
-                // Print the response
-                System.out.println("Response: " + response.toString());
-
                 Token token = JSON.parseObject(response.toString(), Token.class);
 
                 return token.getAccess_token();
@@ -49,6 +50,8 @@ public class WXAccessTokenUtils {
             return null;
         }
     }
+
+
 
     public static class Token {
         private String access_token;

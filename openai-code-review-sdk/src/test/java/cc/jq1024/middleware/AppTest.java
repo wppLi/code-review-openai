@@ -1,11 +1,8 @@
 package cc.jq1024.middleware;
 
-import cc.jq1024.middleware.sdk.domain.model.ChatCompletionSyncResponse;
+import cc.jq1024.middleware.sdk.infrastructure.openai.dto.ChatCompletionSyncResponseDTO;
 import cc.jq1024.middleware.sdk.types.utils.BearerTokenUtils;
-import cc.jq1024.middleware.sdk.types.utils.WXAccessTokenUtils;
 import com.alibaba.fastjson2.JSON;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -77,7 +74,7 @@ public class AppTest {
         connection.disconnect();
 
         // 转换结果
-        ChatCompletionSyncResponse response = JSON.parseObject(content.toString(), ChatCompletionSyncResponse.class);
+        ChatCompletionSyncResponseDTO response = JSON.parseObject(content.toString(), ChatCompletionSyncResponseDTO.class);
         System.out.println(response.getChoices().get(0).getMessage().getContent());
 
     }
