@@ -82,7 +82,7 @@ public class GitCommand {
         // 启动
         Process logProcess = logProcessBuilder.start();
         // 获取最新提交的 git hash 值
-        BufferedReader logReader = new BufferedReader(new BufferedReader(new InputStreamReader(logProcess.getInputStream())));
+        BufferedReader logReader = new BufferedReader(new InputStreamReader(logProcess.getInputStream()));
         String latestCommitHash = logReader.readLine();
         // 关闭流，释放资源
         logReader.close();
@@ -95,8 +95,8 @@ public class GitCommand {
 
         // 读取两次diff不同的代码
         StringBuilder diffCode = new StringBuilder();
-        BufferedReader diffReader = new BufferedReader(new BufferedReader(new InputStreamReader(diffProcess.getInputStream())));
-        String line = "";
+        BufferedReader diffReader = new BufferedReader(new InputStreamReader(diffProcess.getInputStream()));
+        String line;
         while ((line = diffReader.readLine()) != null) {
             diffCode.append(line).append("\n");
         }
