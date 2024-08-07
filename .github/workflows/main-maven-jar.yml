@@ -73,3 +73,5 @@ jobs:
           # openai配置
           CHATGLM_APIHOST: ${{ secrets.CHATGLM_APIHOST }}
           CHATGLM_APIKEYSECRET:  ${{ secrets.CHATGLM_APIKEYSECRET }}
+          # 评审描述
+          OPANAI_REVIEW_DESC: ${{ secrets.OPANAI_REVIEW_DESC }}

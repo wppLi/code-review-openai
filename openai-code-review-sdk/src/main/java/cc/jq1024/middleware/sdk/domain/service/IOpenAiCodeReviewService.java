@@ -6,5 +6,5 @@ package cc.jq1024.middleware.sdk.domain.service;
  */
 public interface IOpenAiCodeReviewService {
 
-    void exec();
+    void exec(String reviewCodeDesc);
 }
