@@ -13,7 +13,6 @@ import java.util.Date;
 /**
  * git命令
  * @author li--jiaqiang
- * @date 2024−08−06
  */
 public class GitCommand {
 

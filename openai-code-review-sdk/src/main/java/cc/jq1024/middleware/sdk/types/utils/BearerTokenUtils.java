@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * chatglm token 的处理
  * @author li--jiaqiang
- * @date 2024−08−05
  */
 public class BearerTokenUtils {
     // 过期时间；默认30分钟

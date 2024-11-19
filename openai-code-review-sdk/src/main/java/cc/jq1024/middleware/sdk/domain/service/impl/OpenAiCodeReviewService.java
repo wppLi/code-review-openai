@@ -16,7 +16,6 @@ import java.util.Map;
 
 /**
  * @author li--jiaqiang
- * @date 2024−08−06
  */
 public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
 
@@ -64,6 +63,7 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
     @Override
     protected void pushMessage(String logUrl) throws Exception {
         Map<String, Map<String, String>> data = new HashMap<>();
+
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.REPO_NAME, gitCommand.getProject());
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.BRANCH_NAME, gitCommand.getBranch());
         TemplateMessageDTO.put(data, TemplateMessageDTO.TemplateKey.COMMIT_AUTHOR, gitCommand.getAuthor());

@@ -10,7 +10,6 @@ import java.io.IOException;
 
 /**
  * @author li--jiaqiang
- * @date 2024−08−06
  */
 public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeReviewService {
 

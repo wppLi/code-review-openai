@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <artifactId>openai-code-review</artifactId>
-    <groupId>cc.jq1024.middleware</groupId>
-    <version>1.0</version>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <version>2.7.12</version>
+    <relativePath>pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
+  <groupId>io.github.wppli</groupId>
   <artifactId>openai-code-review-sdk</artifactId>
-  <name>openai-code-review-sdk</name>
-  <url>http://maven.apache.org</url>
+  <name>${project.gitee.name}</name>
+  <version>1.1</version>
+  <description>${project.gitee.name}</description>
+  <url>${project.gitee.url}/${project.gitee.name}</url>
+  <developers>
+    <developer>
+      <id>jq1024cc</id>
+      <name>jq1024cc</name>
+      <email>lijiaqiang1024@163.com</email>
+      <roles>
+        <role>Project Manager</role>
+        <role>Architect</role>
+      </roles>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <scm>
+    <connection>${project.gitee.url}/${project.gitee.name}.git</connection>
+    <developerConnection>scm:git:ssh://git@gitee.com:${project.gitee.username}/${project.gitee.name}.git</developerConnection>
+    <url>${project.gitee.url}/${project.gitee.name}</url>
+  </scm>
   <build>
     <resources>
       <resource>
@@ -29,6 +55,57 @@
       </testResource>
     </testResources>
     <plugins>
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.4.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>jq1024cc</publishingServerId>
+          <tokenAuth>true</tokenAuth>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>D:\soft\Gpg\GnuPG\bin\gpg.exe</executable>
+          <keyname>${project.gitee.username}</keyname>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.2.0</version>
@@ -86,7 +163,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <version>4.13.2</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -139,11 +216,14 @@
     </dependency>
   </dependencies>
   <properties>
+    <project.gitee.name>code-review-openai</project.gitee.name>
     <slf4j.version>2.0.6</slf4j.version>
     <java.version>1.8</java.version>
+    <project.gitee.url>https://github.com/wppLi</project.gitee.url>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <retrofit2.version>2.9.0</retrofit2.version>
     <maven.compiler.source>1.8</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.gitee.username>wppLi</project.gitee.username>
   </properties>
 </project>
